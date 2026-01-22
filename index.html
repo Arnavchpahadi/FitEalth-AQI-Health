@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AirAware - Professional Air Quality Monitor">
+    <title>FitEalth AQI</title>
+    <!-- Use standard system fonts for best performance/modern look -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Loading Overlay -->
+    <div id="loading-screen" class="loading-screen">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Main Application Wrapper -->
+    <div id="app" class="app-container">
+
+        <!-- Top Navigation (Desktop) / Header (Mobile) -->
+        <header class="app-header">
+            <div class="brand">
+                <div class="brand-logo"></div> <!-- CSS Circle -->
+                <h1>FitEalth AQI</h1>
+            </div>
+        </header>
+
+        <!-- Dynamic Content Area -->
+        <main class="main-content">
+
+            <!-- Dashboard / Home -->
+            <section id="home" class="section active">
+                <div class="dashboard-header">
+                    <h2>Current Status</h2>
+                </div>
+
+                <div class="search-bar-container">
+                    <div class="input-group">
+                        <input type="text" id="city-search" placeholder="City name..." aria-label="Search city">
+                        <button id="search-btn" class="btn btn-primary">Search</button>
+                    </div>
+                    <button id="locate-btn" class="btn btn-outline">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8 8 0 0 1-8 8z" />
+                            <circle cx="12" cy="12" r="3" />
+                        </svg>
+                        Locate
+                    </button>
+                </div>
+
+                <!-- Main AQI Card -->
+                <div id="aqi-card" class="card aqi-hero">
+                    <div class="card-header-row">
+                        <h3 id="city-name" class="city-title">--</h3>
+                        <span id="last-updated" class="timestamp">Just now</span>
+                    </div>
+
+                    <div class="aqi-display">
+                        <div id="aqi-value" class="aqi-number">--</div>
+                        <div class="aqi-label">AQI (US)</div>
+                    </div>
+
+                    <div id="aqi-status" class="status-badge">Loading...</div>
+
+                    <div class="pollutant-grid">
+                        <div class="pollutant-item">
+                            <span class="p-label">PM2.5</span>
+                            <span id="pm25" class="p-value">--</span>
+                        </div>
+                        <div class="pollutant-item">
+                            <span class="p-label">PM10</span>
+                            <span id="pm10" class="p-value">--</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="error-message" class="alert hidden"></div>
+            </section>
+
+            <!-- Global Rankings -->
+            <section id="cities" class="section">
+                <div class="section-header">
+                    <h2>Global Rankings</h2>
+                    <p class="subtitle">Real-time air quality in major cities</p>
+                </div>
+                <div id="cities-container" class="grid-list">
+                    <!-- Dynamic Cities -->
+                </div>
+            </section>
+
+            <!-- Health Insights -->
+            <section id="health" class="section">
+                <div class="section-header">
+                    <h2>Health Insights</h2>
+                    <p class="subtitle">Recommendations for current conditions</p>
+                </div>
+
+                <div class="insights-grid">
+                    <div class="insight-card">
+                        <h3>Recommended</h3>
+                        <ul id="advice-do" class="clean-list"></ul>
+                    </div>
+                    <div class="insight-card">
+                        <h3>Avoid</h3>
+                        <ul id="advice-avoid" class="clean-list"></ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Wellness / Exercise -->
+            <section id="exercise" class="section">
+                <div class="section-header">
+                    <h2>Wellness</h2>
+                    <p class="subtitle">Curated activities for today</p>
+                </div>
+
+                <div class="progress-bar-container">
+                    <div class="progress-text">
+                        <span id="progress-count">0 completed</span>
+                        <button id="reset-progress" class="text-btn">Reset</button>
+                    </div>
+                    <div class="progress-fill-bg">
+                        <div id="progress-fill" class="progress-fill"></div>
+                    </div>
+                </div>
+
+                <div class="tabs">
+                    <button class="tab active" data-category="weight-loss">Cardio</button>
+                    <button class="tab" data-category="breathing">Breathing</button>
+                    <button class="tab" data-category="yoga">Yoga</button>
+                    <button class="tab" data-category="indoor">Indoor</button>
+                </div>
+
+                <div id="exercise-container" class="exercise-grid">
+                    <!-- Dynamic Exercises -->
+                </div>
+            </section>
+
+        </main>
+
+        <!-- Navigation Bar -->
+        <nav class="app-nav">
+            <div class="nav-content">
+                <button class="nav-item active" data-section="home">
+                    <svg class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span>Home</span>
+                </button>
+                <button class="nav-item" data-section="cities">
+                    <svg class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="20" x2="18" y2="10"></line>
+                        <line x1="12" y1="20" x2="12" y2="4"></line>
+                        <line x1="6" y1="20" x2="6" y2="14"></line>
+                    </svg>
+                    <span>Global</span>
+                </button>
+                <button class="nav-item" data-section="health">
+                    <svg class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                    </svg>
+                    <span>Health</span>
+                </button>
+                <button class="nav-item" data-section="exercise">
+                    <svg class="nav-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <span>Activity</span>
+                </button>
+            </div>
+        </nav>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

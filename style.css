@@ -1,0 +1,665 @@
+/* 
+   AirAware - Professional Design System
+   Modern, Clean, Minimalistic
+*/
+
+:root {
+    /* Refined Palette */
+    --primary: #10B981;
+    /* Emerald 500 */
+    --primary-dark: #059669;
+    /* Emerald 600 */
+    --accent: #3B82F6;
+    /* Blue 500 */
+
+    --bg-body: #F8FAFC;
+    /* Slate 50 */
+    --bg-card: #FFFFFF;
+
+    --text-primary: #1E293B;
+    /* Slate 800 */
+    --text-secondary: #64748B;
+    /* Slate 500 */
+    --text-light: #94A3B8;
+    /* Slate 400 */
+
+    /* AQI Colors (Professional Standards) */
+    --aqi-good: #10B981;
+    /* Green */
+    --aqi-moderate: #F59E0B;
+    /* Amber */
+    --aqi-unhealthy: #F97316;
+    /* Orange */
+    --aqi-severe: #EF4444;
+    /* Red */
+
+    --radius: 12px;
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+
+    --nav-height: 64px;
+}
+
+/* Reset & Base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+}
+
+body {
+    font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    background-color: var(--bg-body);
+    color: var(--text-primary);
+    line-height: 1.5;
+    padding-bottom: calc(var(--nav-height) + 20px);
+    /* Mobile Padding */
+}
+
+/* Loading Overlay */
+.loading-screen {
+    position: fixed;
+    inset: 0;
+    background: var(--bg-body);
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.4s ease;
+}
+
+.loading-screen.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 3px solid var(--text-light);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* App Layout */
+.app-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* Header */
+.app-header {
+    padding: 20px;
+    text-align: center;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+}
+
+.brand-logo {
+    width: 24px;
+    height: 24px;
+    background: var(--primary);
+    border-radius: 6px;
+}
+
+.brand h1 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    color: var(--text-primary);
+}
+
+/* Content Area */
+.main-content {
+    padding: 0 20px;
+}
+
+.section {
+    display: none;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.section.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.section-header {
+    margin-bottom: 24px;
+}
+
+.section-header h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.subtitle {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* Base Interactions */
+.btn {
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s;
+    font-size: 0.9rem;
+}
+
+.btn-primary {
+    background-color: var(--text-primary);
+    color: white;
+    padding: 10px 20px;
+}
+
+.btn-primary:hover {
+    background-color: #000;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid var(--text-light);
+    color: var(--text-primary);
+    padding: 8px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-outline:hover {
+    background: rgba(0, 0, 0, 0.02);
+    border-color: var(--text-secondary);
+}
+
+/* Inputs */
+.search-bar-container {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+}
+
+.input-group {
+    display: flex;
+    flex: 1;
+    gap: 8px;
+    background: var(--bg-card);
+    padding: 4px;
+    border-radius: 10px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid #E2E8F0;
+}
+
+#city-search {
+    border: none;
+    padding: 8px 12px;
+    flex: 1;
+    outline: none;
+    font-size: 1rem;
+    color: var(--text-primary);
+}
+
+/* Cards */
+.card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+    border: 1px solid #E2E8F0;
+}
+
+.grid-list,
+.exercise-grid,
+.insights-grid {
+    display: grid;
+    gap: 16px;
+    grid-template-columns: 1fr;
+}
+
+/* AQI Specifics */
+.aqi-hero {
+    text-align: center;
+    border-top: 4px solid transparent;
+}
+
+.city-title {
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+.timestamp {
+    display: block;
+    font-size: 0.8rem;
+    color: var(--text-light);
+    margin-top: 4px;
+}
+
+.aqi-display {
+    margin: 32px 0;
+}
+
+.aqi-number {
+    font-size: 5rem;
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -2px;
+}
+
+.aqi-label {
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--text-light);
+    margin-top: 8px;
+    letter-spacing: 1px;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 6px 16px;
+    border-radius: 100px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    background: #F1F5F9;
+    color: var(--text-secondary);
+    margin-bottom: 24px;
+}
+
+.pollutant-grid {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    border-top: 1px solid #F1F5F9;
+    padding-top: 24px;
+}
+
+.pollutant-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.p-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: var(--text-light);
+    font-weight: 600;
+}
+
+.p-value {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+/* Insights */
+.insight-card {
+    background: var(--bg-card);
+    padding: 20px;
+    border-radius: var(--radius);
+    border: 1px solid #E2E8F0;
+}
+
+.insight-card h3 {
+    font-size: 1rem;
+    margin-bottom: 12px;
+    color: var(--text-primary);
+}
+
+.clean-list {
+    list-style: none;
+}
+
+.clean-list li {
+    padding: 8px 0;
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    border-bottom: 1px solid #F8FAFC;
+}
+
+.clean-list li:last-child {
+    border-bottom: none;
+}
+
+/* Exercises */
+.progress-bar-container {
+    background: var(--bg-card);
+    padding: 16px;
+    border-radius: var(--radius);
+    border: 1px solid #E2E8F0;
+    margin-bottom: 20px;
+}
+
+.progress-text {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-primary);
+}
+
+.text-btn {
+    background: none;
+    border: none;
+    color: var(--text-light);
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+.text-btn:hover {
+    color: var(--primary);
+}
+
+.progress-fill-bg {
+    height: 8px;
+    background: #F1F5F9;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--primary);
+    width: 0%;
+    /* JS will update this */
+    transition: width 0.3s ease;
+}
+
+.tabs {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    margin-bottom: 20px;
+    scrollbar-width: none;
+}
+
+/* ... tabs ... */
+
+/* ... (rest of styles) ... */
+
+/* Desktop Nav Title Update */
+@media (min-width: 768px) {
+
+    /* ... */
+    .nav-content::before {
+        content: 'FitEalth AQI';
+        /* UPDATED NAME */
+        font-weight: 800;
+        font-size: 1.2rem;
+        margin-right: auto;
+        color: var(--text-primary);
+        display: flex;
+        align-items: center;
+    }
+
+    /* ... */
+}
+
+.tab {
+    padding: 8px 16px;
+    border-radius: 8px;
+    background: transparent;
+    border: 1px solid #E2E8F0;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.tab.active {
+    background: var(--text-primary);
+    color: white;
+    border-color: var(--text-primary);
+}
+
+.exercise-card {
+    background: var(--bg-card);
+    border: 1px solid #E2E8F0;
+    border-radius: var(--radius);
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    justify-content: space-between;
+}
+
+.ex-icon {
+    font-size: 1.5rem;
+    width: 48px;
+    height: 48px;
+    background: #F8FAFC;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ex-info h4 {
+    font-size: 1rem;
+    margin-bottom: 2px;
+}
+
+.ex-info span {
+    font-size: 0.8rem;
+    color: var(--text-light);
+}
+
+.check-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 2px solid #E2E8F0;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    transition: 0.2s;
+}
+
+.check-btn.done {
+    background: var(--primary);
+    border-color: var(--primary);
+}
+
+/* Polluted Cities */
+.city-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px;
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    border: 1px solid #E2E8F0;
+    cursor: pointer;
+    transition: transform 0.1s;
+}
+
+.city-item:hover {
+    background: #F8FAFC;
+}
+
+/* Navigation */
+.app-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid #E2E8F0;
+    z-index: 1000;
+}
+
+.nav-content {
+    display: flex;
+    justify-content: space-around;
+    height: var(--nav-height);
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.nav-item {
+    flex: 1;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    color: var(--text-light);
+    font-size: 0.7rem;
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.nav-item svg {
+    transition: transform 0.2s;
+}
+
+.nav-item.active {
+    color: var(--text-primary);
+}
+
+.nav-item.active svg {
+    color: var(--primary);
+}
+
+/* Alert */
+.alert {
+    padding: 12px;
+    background: #FEF2F2;
+    color: #991B1B;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    margin-top: 16px;
+    text-align: center;
+}
+
+.hidden {
+    display: none;
+}
+
+/* Desktop */
+@media (min-width: 768px) {
+    body {
+        padding-top: 80px;
+        padding-bottom: 0px;
+    }
+
+    .app-nav {
+        top: 0;
+        bottom: auto;
+        border-top: none;
+        border-bottom: 1px solid #E2E8F0;
+    }
+
+    .nav-content {
+        max-width: 1000px;
+        padding: 0 20px;
+        justify-content: center;
+        gap: 40px;
+    }
+
+    .nav-item {
+        flex: 0 0 auto;
+        flex-direction: row;
+        gap: 8px;
+        font-size: 0.9rem;
+    }
+
+    .app-header {
+        display: none;
+        /* Logo is redundant with Top Nav, or we can Integrate */
+    }
+
+    /* Add Logo to Nav via CSS Pseudo or just keep minimal */
+    .nav-content::before {
+        content: 'FitEalth AQI';
+        font-weight: 800;
+        font-size: 1.2rem;
+        margin-right: auto;
+        color: var(--text-primary);
+        display: flex;
+        align-items: center;
+    }
+
+    .grid-list,
+    .exercise-grid,
+    .insights-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .aqi-hero {
+        padding: 40px;
+    }
+}
+
+/* Dynamic State Colors */
+.status-good {
+    color: var(--aqi-good);
+    background: #ECFDF5;
+}
+
+.status-moderate {
+    color: var(--aqi-moderate);
+    background: #FFFBEB;
+}
+
+.status-unhealthy {
+    color: var(--aqi-unhealthy);
+    background: #FFF7ED;
+}
+
+.status-severe {
+    color: var(--aqi-severe);
+    background: #FEF2F2;
+}
+
+/* Border Colors for Cards based on Status */
+.border-good {
+    border-top-color: var(--aqi-good);
+}
+
+.border-moderate {
+    border-top-color: var(--aqi-moderate);
+}
+
+.border-unhealthy {
+    border-top-color: var(--aqi-unhealthy);
+}
+
+.border-severe {
+    border-top-color: var(--aqi-severe);
+}
